@@ -1,15 +1,14 @@
-﻿namespace BigRunner.ConsoleApp
+﻿using static System.String;
+
+namespace BigRunner.ConsoleApp
 {
 	using System;
-	using System.Collections.Generic;
 	using System.Data;
 	using System.Data.SqlClient;
 	using System.Diagnostics;
 	using System.IO;
-	using System.Linq;
-	using System.Text;
 
-	/// <summary>
+    /// <summary>
 	/// This indicates that it is start point to run
 	/// </summary>
 	class Program
@@ -26,9 +25,9 @@
 				If enabling the log, we will write the error
 				in Exception to the log file
 			**********************************************/
-			if (enabledLogToFile && logger != null)
+			if (enabledLogToFile)
 			{
-				logger.WriteLine(ex.Message);
+				logger?.WriteLine(ex.Message);
 			}
 
 			/**********************************************
@@ -90,10 +89,8 @@
 					{
 						return sqlConnection;
 					}
-					else
-					{
-						Console.WriteLine(String.Format("[Error] Your database is in {0} status", sqlConnection.State.ToString()));
-					}
+
+				    Console.WriteLine($"[Error] Your database is in {sqlConnection.State.ToString()} status");
 				}
 				catch (Exception e)
 				{
@@ -111,10 +108,9 @@
 		/// <returns>Returns stream reader to file</returns>
 		private static StreamReader InputBigSqlScriptFilePathData()
 		{
-			var bigSqlScriptFilePath = String.Empty;
-			StreamReader reader = null;
+			var bigSqlScriptFilePath = Empty;
 
-			/**********************************************
+		    /**********************************************
 				Big Sql Script File Path Input Data
 			**********************************************/
 			Console.WriteLine();
@@ -130,32 +126,24 @@
 				Console.Write("Big Sql Script File Path: ");
 				bigSqlScriptFilePath = Console.ReadLine();
 
-				if (!String.IsNullOrEmpty(bigSqlScriptFilePath))
-				{
-					if (File.Exists(bigSqlScriptFilePath))
-					{
-						try
-						{
-							reader = new StreamReader(bigSqlScriptFilePath);
-							if (reader != null)
-							{
-								return reader;
-							}
-							else
-							{
-								Console.WriteLine("[Error] Can't open the stream to read file");
-							}
-						}
-						catch (Exception e)
-						{
-							Console.WriteLine("[Error] " + e.Message);
-						}
-					}
-					else
-					{
-						Console.WriteLine(String.Format("[Error] The big sql script file path '{0}' hasn't existed in your hard drive", bigSqlScriptFilePath));
-					}
-				}
+			    if (IsNullOrEmpty(bigSqlScriptFilePath)) continue;
+			    if (File.Exists(bigSqlScriptFilePath))
+			    {
+			        try
+			        {
+			            var reader = new StreamReader(bigSqlScriptFilePath);
+			            return reader;
+			        }
+			        catch (Exception e)
+			        {
+			            Console.WriteLine("[Error] " + e.Message);
+			        }
+			    }
+			    else
+			    {
+			        Console.WriteLine(
+			            $"[Error] The big sql script file path '{bigSqlScriptFilePath}' hasn't existed in your hard drive");
+			    }
 			} while (true);
 		}
 
@@ -180,7 +168,7 @@
 				Console.WriteLine("e.g: yes or no");
 				Console.Write("Enable log to file(yes/no)? ");
 				var enabledLogToFileStr = Console.ReadLine();
-				enabledLogToFileStr = enabledLogToFileStr != null ? enabledLogToFileStr.Trim().ToLower() : enabledLogToFileStr;
+				enabledLogToFileStr = enabledLogToFileStr?.Trim().ToLower();
 
 				/**********************************************
 					If the user enter "yes" or "no", we will
@@ -191,10 +179,8 @@
 				{
 					return enabledLogToFileStr == "yes";
 				}
-				else
-				{
-					Console.WriteLine("[Error] Please enter either of two values following: yes or no");
-				}
+
+			    Console.WriteLine("[Error] Please enter either of two values following: yes or no");
 			} while (true);
 		}
 
@@ -204,7 +190,7 @@
 		/// <returns>Returns text writer to log file</returns>
 		private static TextWriter InputLogFilePathData()
 		{
-			var logFilePath = String.Empty;
+			var logFilePath = Empty;
 			TextWriter logger = null;
 
 			/**********************************************
@@ -228,7 +214,7 @@
 					extension data, confirm the error message
 					to user.
 				**********************************************/
-				if (String.IsNullOrEmpty(logFilePath) || !logFilePath.EndsWith(".txt"))
+				if (IsNullOrEmpty(logFilePath) || !logFilePath.EndsWith(".txt"))
 				{
 					Console.WriteLine("[Error] Please enter valid file path and has extension .txt");
 				}
@@ -243,14 +229,7 @@
 						try
 						{
 							logger = new StreamWriter(logFilePath);
-							if (logger != null)
-							{
-								break;
-							}
-							else
-							{
-								Console.WriteLine("[Error] Can't open the stream to write data to file");
-							}
+						    break;
 						}
 						catch (Exception e)
 						{
@@ -267,18 +246,8 @@
 								writer point to the file stream
 							**********************************************/
 							var fileStream = File.Create(logFilePath);
-							if (fileStream != null)
-							{
-								logger = new StreamWriter(fileStream);
-								if (logger != null)
-								{
-									break;
-								}
-								else
-								{
-									Console.WriteLine("[Error] Can't open the stream to write data to file");
-								}
-							}
+						    logger = new StreamWriter(fileStream);
+						    break;
 						}
 						catch (Exception e)
 						{
@@ -292,8 +261,8 @@
 				}
 			} while (true);
 
-			logger.WriteLine(String.Format("*************** [{0}]****************", DateTime.Now));
-			logger.WriteLine(String.Format("Running {0}...", logFilePath));
+			logger.WriteLine($"*************** [{DateTime.Now}]****************");
+			logger.WriteLine($"Running {logFilePath}...");
 			return logger;
 		}
 
@@ -304,14 +273,10 @@
 		/// <returns>Returns string elapsed time</returns>
 		private static string CalElapsedTime(Stopwatch stopWatch)
 		{
-			if (stopWatch != null)
-			{
-				var timeSpan = stopWatch.Elapsed;
-				return String.Format("Time elapsed: {0:00}:{1:00}:{2:00}.{3:00}",
-					timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds,
-					timeSpan.Milliseconds / 10);
-			}
-			return String.Empty;
+		    if (stopWatch == null) return Empty;
+		    var timeSpan = stopWatch.Elapsed;
+		    return
+		        $"Time elapsed: {timeSpan.Hours:00}:{timeSpan.Minutes:00}:{timeSpan.Seconds:00}.{timeSpan.Milliseconds / 10:00}";
 		}
 
 		/// <summary>
@@ -320,10 +285,10 @@
 		/// <param name="args">The parameters from command line are passed into this method</param>
 		static void Main(string[] args)
 		{
-			/**********************************************
+            /**********************************************
 				Initialize these necessary input parameters
 			**********************************************/
-			var sqlConnection = new SqlConnection();
+            SqlConnection sqlConnection = new SqlConnection();
 			var enabledLogToFile = false;
 			TextWriter logger = null;
 			StreamReader reader = null;
@@ -349,8 +314,8 @@
 					Contain line code sql script and next line
 					one
 				**********************************************/
-				string scriptDataline, nextScriptDataLine;
-				scriptDataline = nextScriptDataLine = String.Empty;
+				string nextScriptDataLine;
+				var scriptDataline = nextScriptDataLine = Empty;
 
 				/**********************************************
 					Count the number of records added to db
@@ -361,9 +326,8 @@
 					Count the number of affected when running
 					command sql
 				**********************************************/
-				var numberOfAffectedRows = 0;
 
-				/**********************************************
+			    /**********************************************
 					Initialize the Sql Command to run the sql
 					script
 				**********************************************/
@@ -372,7 +336,7 @@
 				/**********************************************
 					Initialize the message to show to the user
 				**********************************************/
-				var message = String.Empty;
+				var message = Empty;
 
 				/**********************************************
 					Specify the first times to run the script
@@ -387,7 +351,7 @@
 				/**********************************************
 					Indicate running the script until EOF
 				**********************************************/
-				while ((nextScriptDataLine = reader.ReadLine()) != null && Console.KeyAvailable == false)
+				while ((nextScriptDataLine = reader.ReadLine()) != null && !Console.KeyAvailable)
 				{
 					try
 					{
@@ -396,77 +360,73 @@
 							Should combine the current line and the new
 							line which was read from file to run
 						**********************************************/
-						scriptDataline = String.Format("{0} {1}", scriptDataline, nextScriptDataLine);
+						scriptDataline = $"{scriptDataline} {nextScriptDataLine}";
 
 						/**********************************************
 							Should trim the line data to avoid extra
 							whitespaces between begin and end string
 						**********************************************/
-						scriptDataline = scriptDataline != null ? scriptDataline.Trim() : scriptDataline;
+						scriptDataline = scriptDataline.Trim();
 
 						/**********************************************
 							Run the script right away when seeing GO
 							batch. This batch is always sensitive case
 						**********************************************/
-						if (scriptDataline.EndsWith("GO"))
-						{
-							/**********************************************
+					    if (!scriptDataline.EndsWith("GO")) continue;
+					    /**********************************************
 								Cut off the GO string at the end of the line
 								data
 							**********************************************/
-							scriptDataline = scriptDataline.Substring(0, scriptDataline.Length - 2);
+					    scriptDataline = scriptDataline.Substring(0, scriptDataline.Length - 2);
 
-							/**********************************************
+					    /**********************************************
 								Send the script to the database server to
 								run
 							**********************************************/
-							sqlCommand = new SqlCommand(scriptDataline, sqlConnection);
-							numberOfAffectedRows = sqlCommand.ExecuteNonQuery();
+					    sqlCommand = new SqlCommand(scriptDataline, sqlConnection);
+					    var numberOfAffectedRows = sqlCommand.ExecuteNonQuery();
 
-							/**********************************************
+					    /**********************************************
 								Reset the line data to blank value
 							**********************************************/
-							scriptDataline = String.Empty;
+					    scriptDataline = Empty;
 
-							/**********************************************
+					    /**********************************************
 								If having the number of affected rows is
 								greater than zero, we will add it into
 								counter
 							**********************************************/
-							if (numberOfAffectedRows > 0)
-							{
-								counter += numberOfAffectedRows;
-							}
+					    if (numberOfAffectedRows > 0)
+					    {
+					        counter += numberOfAffectedRows;
+					    }
 
-							/**********************************************
+					    /**********************************************
 								Only accept when the counter is greater
 								than zero
 							**********************************************/
-							if (counter > 0)
-							{
-								/**********************************************
+					    if (counter <= 0) continue;
+					    /**********************************************
 									If this is the first time, we will write
 									message to console to update status,
 									otherwise, we will re-update statuc in
 									console
 								**********************************************/
-								if (isFirst)
-								{
-									message = String.Format("Added {0} row(s)", counter);
-									Console.Write(message);
-									isFirst = false;
-								}
-								else
-								{
-									/**********************************************
+					    if (isFirst)
+					    {
+					        message = $"Added {counter} row(s)";
+					        Console.Write(message);
+					        isFirst = false;
+					    }
+					    else
+					    {
+					        /**********************************************
 										Point to position on console screen which
 										has the sentence format "Added {0} row(s)"
 									**********************************************/
-									Console.SetCursorPosition(0, Console.CursorTop);
-									Console.Write(String.Format("Added {0} row(s)", counter));
-								}
-							}
-						}
+					        Console.SetCursorPosition(0, Console.CursorTop);
+					        Console.Write($"Added {counter} row(s)");
+					    }
 					}
 					catch (SqlException ex)
 					{
@@ -476,7 +436,7 @@
 							in case previous command SQL sentence causes
 							error
 						**********************************************/
-						scriptDataline = String.Empty;
+						scriptDataline = Empty;
 					}
 					catch (Exception ex)
 					{
@@ -494,10 +454,10 @@
 				if (enabledLogToFile && logger != null)
 				{
 					logger.WriteLine("Completed");
-					logger.WriteLine(String.Format("Total {0} rows added to database", counter));
+					logger.WriteLine($"Total {counter} rows added to database");
 				}
 				Console.WriteLine("\nCompleted");
-				Console.WriteLine(String.Format("Total {0} rows added to database", counter));
+				Console.WriteLine($"Total {counter} rows added to database");
 
 				/**********************************************
 					Release unused resources
@@ -514,9 +474,9 @@
 				/**********************************************
 					Release unused logger
 				**********************************************/
-				if (enabledLogToFile && logger != null)
+				if (enabledLogToFile)
 				{
-					logger.Close();
+					logger?.Close();
 				}
 
 				/**********************************************
