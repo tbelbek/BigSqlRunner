@@ -32,7 +32,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'src\BigRunner.WinFormsApp\bin\$(buildConfiguration)\app.publish'
-    Contents: '**'
+    Contents: '**\*'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: VSTest@2
