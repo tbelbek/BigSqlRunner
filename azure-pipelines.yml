@@ -43,7 +43,7 @@ steps:
     repositoryName: 'tbelbek/BigSqlRunner'
     action: 'create'
     target: '$(Build.SourceVersion)'
-    tagSource: 'userSpecifiedTag'
+    tagSource: gitTag
     tagPattern: 'v$(MajorVersion).$(MinorVersion).$(IncrementReleaseTagNumber)'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
