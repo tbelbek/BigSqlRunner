@@ -5,8 +5,8 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD4B29CE-856D-476F-8350-F04651A7B5EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigRunner.ConsoleApp", "src\BigRunner.ConsoleApp\BigRunner.ConsoleApp.csproj", "{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}"
-EndProject
+# Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigRunner.ConsoleApp", "src\BigRunner.ConsoleApp\BigRunner.ConsoleApp.csproj", "{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}"
+# EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigRunner.WinFormsApp", "src\BigRunner.WinFormsApp\BigRunner.WinFormsApp.csproj", "{46C6E53B-D183-4843-87CF-D9ED1F9EE3D0}"
 EndProject
 Global
@@ -15,10 +15,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}.Release|Any CPU.Build.0 = Release|Any CPU
+# 		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+# 		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+# 		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+# 		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{46C6E53B-D183-4843-87CF-D9ED1F9EE3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{46C6E53B-D183-4843-87CF-D9ED1F9EE3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46C6E53B-D183-4843-87CF-D9ED1F9EE3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -28,7 +28,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7} = {AD4B29CE-856D-476F-8350-F04651A7B5EE}
+# 		{F88E3BF4-E405-4E70-B6D3-76ABC05F3EB7} = {AD4B29CE-856D-476F-8350-F04651A7B5EE}
 		{46C6E53B-D183-4843-87CF-D9ED1F9EE3D0} = {AD4B29CE-856D-476F-8350-F04651A7B5EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
