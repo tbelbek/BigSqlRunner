@@ -11,7 +11,7 @@ pool:
   
 
 variables:
-  solution: '**/*.sln'
+  solution: 'sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -28,6 +28,12 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     msbuildArgs: '/target:Publish'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'src\BigRunner.WinFormsApp\bin\$(buildConfiguration)\app.publish'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: VSTest@2
   inputs:
