@@ -31,7 +31,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'bin\$(buildConfiguration)\app.publish'
+    SourceFolder: 'src\BigRunner.WinFormsApp\bin\$(buildConfiguration)\app.publish'
     Contents: '**\*'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
