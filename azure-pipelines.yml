@@ -11,7 +11,7 @@ pool:
   
 
 variables:
-  solution: 'sln'
+  solution: '**\*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -31,7 +31,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'src\BigRunner.WinFormsApp\bin\$(buildConfiguration)\app.publish'
+    SourceFolder: 'bin\$(buildConfiguration)\app.publish'
     Contents: '**\*'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
