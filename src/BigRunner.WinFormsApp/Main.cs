@@ -1,14 +1,11 @@
 ﻿namespace BigRunner.WinFormsApp
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
     using System.Data.SqlClient;
     using System.Diagnostics;
-    using System.Drawing;
     using System.IO;
-    using System.Linq;
     using System.Text;
     using System.Windows.Forms;
 
@@ -559,5 +556,43 @@
             }
         }
         #endregion Useful methods
+
+        private void linkLabel1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var connectionString = txtConnectionString.Text.Trim();
+
+                linkLabel1.Text = "Checking.";
+                /**********************************************
+                Open the connection to the server database 
+                if okay
+                **********************************************/
+                var connection = new SqlConnection(connectionString);
+                connection.Open();
+
+                /**********************************************
+                    Only accept the opening status to database
+                **********************************************/
+                var messageString = connection.State == ConnectionState.Open
+                    ? "Connection OK"
+                    : "Connection NOT OK";
+
+                MessageBox.Show(messageString, "Connection State", MessageBoxButtons.OK,
+                    connection.State == ConnectionState.Open ? MessageBoxIcon.Information : MessageBoxIcon.Stop,
+                    MessageBoxDefaultButton.Button1);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Connection State", MessageBoxButtons.OK,
+                    MessageBoxIcon.Stop,
+                    MessageBoxDefaultButton.Button1);
+            }
+            finally
+            {
+                linkLabel1.Text = "Check Connection";
+            }
+        }
     }
 }
